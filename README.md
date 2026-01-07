@@ -42,6 +42,9 @@ During network segmentation, only switch ports connected to Dell laptops needed 
 **Solution:**
 Developed automation that logs into switches, checks MAC address tables, validates vendor, VLAN, and port mode, then changes the VLAN and logs the previous configuration. A second workflow listens for syslog interface-up traps to handle devices connecting after execution.
 
+**NOTE**:Code can be found at [Network Automation Scripts]([https://github.com/username/network-automation](https://github.com/Plann1ng/Dynamic-VLAN-Automation/blob/main/README.md))
+
+
 ---
 
 ## Site-to-Site VPN Modification
@@ -120,7 +123,7 @@ Automated VPN behavior and enforced stricter profile rules across multiple opera
 Direct Teams calls dropped after approximately 10 seconds when one user was on VPN and the other was on-site.
 
 **Solution:**
-After packet captures and protocol analysis, identified non–VPN-friendly direct call behavior. Implemented split tunneling for required traffic, resolving the issue.
+After packet captures and protocol analysis, identified non–VPN-friendly direct call behavior. Implemented VPN split tunneling for required traffic, resolving the issue.
 
 ---
 
@@ -222,15 +225,6 @@ Expired PKI components affected multiple network and security platforms.
 **Solution:**
 Replaced expired PKI certificates across WLC, ISE, FMC, Prime, and Catalyst Center.
 
----
-
-### Notes
-
-* All examples are sanitized
-* No production identifiers are included
-* Content reflects hands-on operational work
-
----
 
 If you want, next we can:
 
