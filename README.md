@@ -42,7 +42,7 @@ During network segmentation, only switch ports connected to Dell laptops needed 
 **Solution:**
 Developed automation that logs into switches, checks MAC address tables, validates vendor, VLAN, and port mode, then changes the VLAN and logs the previous configuration. A second workflow listens for syslog interface-up traps to handle devices connecting after execution.
 
-**NOTE**:Code can be found at [Network Automation Scripts]([https://github.com/username/network-automation](https://github.com/Plann1ng/Dynamic-VLAN-Automation/blob/main/README.md))
+**NOTE**:Code can be found at [Network Automation Scripts](https://github.com/Plann1ng/Dynamic-VLAN-Automation/blob/main/README.md))
 
 
 ---
