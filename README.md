@@ -225,8 +225,20 @@ Expired PKI components affected multiple network and security platforms.
 **Solution:**
 Replaced expired PKI certificates across WLC, ISE, FMC, Prime, and Catalyst Center.
 
+---
 
-If you want, next we can:
+## Guest Network Outage During ISE Certificate Replacement
+
+**Problem:**
+During a guest certificate replacement on Cisco ISE, external consultants replaced the certificate without awareness of a known Cisco bug that requires an ISE service restart. Because an ISE restart was not possible during production hours, AAA Override and NAC state were disabled on only one of the two independent WLCs (Catalyst 9800). The second WLC (AireOS) continued enforcing AUP/NAC, causing guest authentication failures and a large number of urgent service requests.
+
+**Solution:**
+The issue was quickly identified as an inconsistent workaround across the two independent WLCs. Disabling AAA Override and NAC state on the AireOS WLC as well immediately restored guest network connectivity. This bypassed the AUP and guest certificate dependency until a proper ISE restart could be scheduled outside production hours.
+
+**Bug**
+https://bst.cloudapps.cisco.com/bugsearch/bug/CSCwc64480
+
+
 
 * Split this into multiple themed READMEs (VPN, Wireless, Security, Automation), or
 * Tighten this further for **specific job applications** and ATS keywords
