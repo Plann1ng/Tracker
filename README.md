@@ -235,10 +235,9 @@ During a guest certificate replacement on Cisco ISE, external consultants replac
 **Solution:**
 The issue was quickly identified as an inconsistent workaround across the two independent WLCs. Disabling AAA Override and NAC state on the AireOS WLC as well immediately restored guest network connectivity. This bypassed the AUP and guest certificate dependency until a proper ISE restart could be scheduled outside production hours.
 
-**Bug**
+**Bug:**
 https://bst.cloudapps.cisco.com/bugsearch/bug/CSCwc64480
 
 
 
-* Split this into multiple themed READMEs (VPN, Wireless, Security, Automation), or
-* Tighten this further for **specific job applications** and ATS keywords
+
