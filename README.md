@@ -153,7 +153,7 @@ Provided a controlled automation script allowing service control only for users 
 Guest users had no internet access on first connection even after accepting terms of service.
 
 **Solution:**
-Identified missing DHCP replay configuration preventing VLAN enforcement. Adjusting the configuration resolved the issue without requiring reconnects.
+Identified inconsistent configuration between the ISE and WLC and missing NAC State and Av-pair reauthentication enforced on both sides causing an authentication preventing VLAN enforcement. Adjusting the configuration resolved the issue without requiring reconnects.
 
 ---
 
