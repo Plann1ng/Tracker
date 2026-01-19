@@ -8,10 +8,22 @@ This repository contains a curated list of real-world networking, security, and 
 ## VPN Certificate Prompt During Windows 11 OOBE
 
 **Problem:**
-During Windows 11 OOBE enrollment via Intune, Cisco Secure Client was preinstalled but on first VPN connection users were prompted to manually select a certificate. The VPN client was using a default local profile instead of the intended custom XML profile, and profile changes on the XDR side appeared to have no effect on newly enrolled devices.
+During Windows 11 OOBE enrollment via Intune, Cisco Secure Client was preinstalled but on first VPN connection users were prompted to manually select a certificate. The VPN client was using a test profile instead of the intended custom XML profile, any profile changes on the XDR side appeared to have no effect on newly enrolled devices.
 
 **Solution:**
-The issue was caused by a static XDR deployment package being converted to a .intune file and reused in Intune. Changes to the XDR deployment were not applied until the package was rebuilt, reconverted, and replaced in Intune. After correcting this, VPN connectivity still failed due to Secure Endpoint lacking access to the device certificate store, likely because of incorrect local permissions during enrollment. As a workaround, authentication was switched from device certificate validation to cloud-based verification using Umbrella device data, restoring VPN connectivity for new devices.
+The issue was caused by a static XDR deployment package being converted to a .intune file and reused in Intune. Changes to the XDR deployment were not applied until the package was rebuilt, reconverted, and replaced on Intune.
+
+---
+
+## Domain Contoller migration causing VPN connection outage.
+
+**Problem**
+
+The corporation laptops lost all **VPN** connection during a migration from AD to Intune. It was planned that the new Windows 11's will be using the Entra as an AD and old Windows 10's on-prem AD. This change caused unexpected results due to the poor planning and trusting the Consultants too much.
+
+**Solution**
+
+Firstly the connection was restored by migrating all the users from AD authorization to Umbrella based cloud authentication, that has prevented the outage and gave us enough time to troubleshoot for the RCA without any pressure while keeping up the availability. After some jogging between the lines of logs, configurations, Intune, Entra, ISE, FMC, On-prem AD the issue was finally identified. It was a missing ISE authorization rule that was not matching the new Machines managed by Entra due to the fact that the current Authorization Rules were configured to match on-prem Attributes.
 
 
 ## Cisco Secure Mail – CLI Access
