@@ -263,6 +263,12 @@ https://bst.cloudapps.cisco.com/bugsearch/bug/CSCwc64480
 **Problem:**
 SSL Cert expiry is currently painful for our environment, there are many of them that needs to be changed and keeping them in mind or relying on logs is no reliable. Human errors happen which causes service interruptions, double work, unnecesary stress, consuming time from the employees as well, therefore I am automating this. 
 
+Flow diagram cn be seen below:
+
+![Cert Cycle](Cert-Cycle.png)
+
 **Solution:**
 The solution works with protocol ACME and some custom scripts that are inh help for reading files, shell script to be added for the ISE, FPR, WLC. (Currently in progress, to be updated.)
+
+
 
