@@ -177,6 +177,11 @@ Network authorization rules required migration from on-prem Active Directory to 
 **Solution:**
 Assisted with architecture and integration, implementing certificate injection during OOBE and ISE validation with cached-certificate fallback for resilience.
 
+Flow diagram can be seen below:
+
+![Auth Flow](Auth-Logic.png)
+
+
 ---
 
 ## Windows 11 Upgrade Timeouts
