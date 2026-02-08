@@ -270,5 +270,7 @@ Flow diagram cn be seen below:
 **Solution:**
 The solution works with protocol ACME and some custom scripts that are inh help for reading files, shell script to be added for the ISE, FPR, WLC. (Currently in progress, to be updated.)
 
+NOTE: The code for this is currently private as is planned to be B2B software under development
+
 
 
