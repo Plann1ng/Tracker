@@ -272,5 +272,18 @@ The solution works with protocol ACME and some custom scripts that are inh help 
 
 NOTE: The code for this is currently private as is planned to be B2B software under development
 
+---
 
+## NetBox-Based DDI Automation Platform
 
+**Problem:**
+The environment lacked a centralized and authoritative DDI (DNS, DHCP, IPAM) control layer. DNS records, DHCP scopes, VLAN data, and infrastructure inventory were fragmented across Windows DNS, DHCP, and Catalyst Center, resulting in limited visibility, no automated correlation between datasets, and manual documentation updates whenever new VLANs or servers were introduced.
+
+**Solution:**
+A custom NetBox-based DDI automation platform that consolidates DNS, DHCP, VLAN, and infrastructure data via API-driven Python integration with NetBox Community and Catalyst Center. DHCP scopes are synchronized as prefixes with state, ranges, failover details, and utilization metrics. Static DNS A records are imported with health validation, duplicate detection, and classification, including controlled promotion of orphaned records to managed “Server & Service” objects while excluding DHCP-managed prefixes.
+
+Infrastructure devices are synchronized from Catalyst Center with serial numbers, models, management IPs, and interface inventories. Missing device types are created dynamically, interface templates are generated from discovered hardware, and primary management IPs are assigned with duplicate protection.
+
+Dynamic DHCP leases are excluded to maintain NetBox as a source of truth rather than an endpoint inventory system. Planned enhancements include reverse DNS validation, DHCP reservation synchronization, drift detection, structured audit logging, and MAC-to-switch-port correlation.
+
+Provides the ability to keep the network documentation relevant without any extra work, eleminating human error and preserving information always up-to-date.
