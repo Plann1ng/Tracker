@@ -287,3 +287,21 @@ Infrastructure devices are synchronized from Catalyst Center with serial numbers
 Dynamic DHCP leases are excluded to maintain NetBox as a source of truth rather than an endpoint inventory system. Planned enhancements include reverse DNS validation, DHCP reservation synchronization, drift detection, structured audit logging, and MAC-to-switch-port correlation.
 
 Provides the ability to keep the network documentation relevant without any extra work, eleminating human error and preserving information always up-to-date.
+
+---
+
+## Corporational License Agent
+**Problem:**
+The corporation does have multiple different licenses for many kind of solutions and it is hard to try to keep up with all those different licenses that have seperate URLs and seperate workflow. Additonally even in case someone does learn how to go through all the unique licensing portals it is bound to be forgotten as it is rarely being interacted with. This creates a pain point where one needs to re-check how to work within the multiple licensing solutions of different vendors which consumes time, as well as no central hub to get the most relevant information about all the licenses within the organization at once. These licenses are crucial part of the organizational workflow on the day-to-day life as multiple systems rely on these licenses to function and keep both security and connectivity intact.
+
+**Solution:**
+A custom AI agent that was trained to handle all the vendors the organization have agreement with, their documentation on how to handle unique cases (for example how to transfer license from one smart account to another) and organizational data ingested (for example inventory, purchases, license consumptions, tokens etc.) made as a single hub where all questions about all different licenses can be answered for no time without requiring the users to go through a painful guideline over and over again.
+
+---
+
+## VPN connections randomly establishing on trusted network
+**Problem:**
+VPN connections are being re-established in corporational network after working from a remote workplace, this issue is not persistance and seems to have a random pattern, however it maybe be troublesome for the end-users who are not fluent with VPN solution's workflow as when the VPN connects on trusted network there is path mismatch and the end user can not access resoures that they should be able to in theory.
+
+**Solution:**
+After digging further onto the VPN profile that is currently used one thing makes impression, the TrustedNetworkPolicy for the VPN profile is at "Pause" which means if the users allocate from an untrusted network towards trusted the VPN connection will be paused and upon leaving it will resume the session, however the client sometimes does not recognize the office quickly or consistently enough as trusted, and because Pause keeps the old VPN session around, that can leave the laptop in a half-wrong network state which triggers Auto-Reconnect within trusted network, The solution is simply to end the current session with "Disconnect" option upon entering trusted network which clears the session and prevents mismatches or half-states
