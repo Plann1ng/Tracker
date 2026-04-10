@@ -305,3 +305,29 @@ VPN connections are being re-established in corporational network after working 
 
 **Solution:**
 After digging further onto the VPN profile that is currently used one thing makes impression, the TrustedNetworkPolicy for the VPN profile is at "Pause" which means if the users allocate from an untrusted network towards trusted the VPN connection will be paused and upon leaving it will resume the session, however the client sometimes does not recognize the office quickly or consistently enough as trusted, and because Pause keeps the old VPN session around, that can leave the laptop in a half-wrong network state which triggers Auto-Reconnect within trusted network, The solution is simply to end the current session with "Disconnect" option upon entering trusted network which clears the session and prevents mismatches or half-states
+
+## IDP stopps working after firewall update
+**Problem:**
+After upgrading corporational firewalls to a newer patch due to certain bugs the organizational IDP stops passing traffic even though no ACL changes were ever changed for this particular flow. As temporary solution FastPath was implemented,however RCA is neccesarry. The IDP uses VXLAN connections on top of regular datapath. This is critical for the current corporation as access to all organization specific services are being verified over this solution. If this does not work the organization have no visible face or everyday services on the public and/or the private network.
+
+**Solution:**
+Packet captures show that usual communcation goes through as expected, however specific docker VXLAN traffic is being dropped due to new snort features after the update even though it is not mentioned in the Release Notes. Allowing this traffic with ACL have resolved the issue and FastPath is no longer needed. 
+
+
+*Reference to the bug:*
+"Symptom:
+Document about Multi-layer traffic inspection  states that "Multi-layer inspection for Security Intelligence—Snort 3 detects the innermost IP address regardless of the layer." However, it is not explicitly mentioned that the  innermost header will only be inspected by snort3 if L7 Rule is configured.
+
+Conditions:
+Include L7 rule condition as well which triggers snort3 deep inspection intelligence for multi-layer traffic
+
+Workaround:
+n/a
+
+Further Problem Description:
+Reference Link: https://www.cisco.com/c/en/us/td/docs/security/secure-firewall/management-center/snort/740/snort3-configuration-guide-v74.pdf
+
+If using L7 condition(url filtering, app-id, geolocation etc) in the rule or a security intelligence feature in the ACP, we need an ACP rule with inner header for rules to match. With dns sinkhole, which is part of DNS policy in SI, both inner and outer header is required in an ACP for rules to match."
+
+P.S: The bug is not publicly visible.
+
