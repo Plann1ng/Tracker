@@ -331,3 +331,24 @@ If using L7 condition(url filtering, app-id, geolocation etc) in the rule or a s
 
 P.S: The bug is not publicly visible.
 
+
+
+## SEFOS / Jitsi On-Prem High Availability Infrastructure Migration
+
+**Problem:**  
+The existing on-premise SEFOS/Jitsi environment needed to be rebuilt and migrated to a new infrastructure with proper redundancy, network segmentation and centralized management. The new design required three Docker Swarm managers, three worker nodes, a dedicated Ansible server, redundant load balancers, monitoring, TURN services and integration with the existing Cisco Secure Firewall environment.
+
+The migration also had to preserve the existing public Jitsi service address while providing HTTPS, WebRTC media on UDP 10000-10002, monitoring access and automatic failover without interrupting users.
+
+**Solution:**  
+Built the new environment from the network layer upward, including a dedicated DMZ, routing, firewall ACLs, outbound PAT, DNS and management access. Deployed and validated a three-manager / three-worker Docker Swarm running Jitsi Web, Jicofo, Prosody, Jitsi Videobridge, Coturn, HAProxy, Grafana, Prometheus and VictoriaMetrics. A dedicated Ansible server was also configured with SSH key-based access to all Swarm nodes.
+
+Implemented two SKUDONET Community Edition load balancers in active/passive HA. The public service VIP is shared between both load balancers, HTTPS is distributed toward the Jitsi workers, and WebRTC media is deterministically forwarded as UDP 10000, 10001 and 10002 toward the respective Jitsi Videobridge nodes. HTTP was configured to redirect cleanly to HTTPS.
+
+During failover testing, the service VIP successfully moved between load balancers but connectivity initially failed because the upstream firewall retained the previous node's ARP entry. The issue was identified through packet captures, ARP inspection and failover testing, and resolved by adding automatic gratuitous ARP announcements during cluster promotion. After the change, the firewall automatically learns the new load-balancer MAC and both HTTPS and UDP media continue through a node failure.
+
+The final environment was validated with full load-balancer failover, Docker Swarm health checks, DNS/TLS validation, packet captures for all media ports, monitoring access, Ansible connectivity and management access through the organization's jump server. Temporary migration firewall rules were removed after successful cutover.
+
+**Technologies:** Cisco FTD/FMC, SKUDONET, Docker Swarm, Jitsi, Jitsi Videobridge, HAProxy, Coturn, Ansible, Grafana, Prometheus, VictoriaMetrics, VMware, Linux, DNS, TLS, WebRTC.
+
+
